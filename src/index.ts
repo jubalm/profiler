@@ -1,4 +1,3 @@
-#!/usr/bin/env node
 import { parseArgs, showHelp } from './lib/cli';
 import { determineProjectType } from './lib/detector';
 import { formatAsJSON, formatAsMarkdown } from './lib/formatter';

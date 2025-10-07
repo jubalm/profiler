@@ -1,58 +1,30 @@
-# Profiler
+# Project Profiler for AI & Workflows
 
-Lightweight project profiler that outputs key indicators optimized for LLM consumption.
+Get instant codebase knowledge. Feed it to your LLM and save tokens, pipe to workflows, or bootstrap documentation. Zero installation, works anywhere.
 
-## Usage
+## Installation
 
-### Default (LLM-optimized)
+Need to install? Seriously? Of course, there's no installation needed!
 
-```bash
-npx @jubalm/profiler
-```
-
-Outputs markdown with methodology footnotes - best for LLM consumption.
-
-### Minimal Markdown
+Just run it:
 
 ```bash
-npx @jubalm/profiler --format=markdown
+npx github:jubalm/profiler
 ```
 
-Outputs markdown without methodology footnotes - just the data.
+Voila! It scans your project, detects the project type, shows useful key indicators for a number of use-cases.
 
-### JSON Output
+## Example Use Cases
+
+### Instant Project Analysis with Claude Code
+
+Pipe directly to Claude Code CLI for AI-powered analysis:
 
 ```bash
-npx @jubalm/profiler --format=json
+npx github:jubalm/profiler | claude -p "what testing strategy would work best for this project?"
 ```
 
-Outputs flat JSON structure for programmatic use.
-
-### Save to File
-
-```bash
-npx @jubalm/profiler > .profile
-npx @jubalm/profiler --format=markdown > .profile
-npx @jubalm/profiler --format=json > data.json
-```
-
-### Help
-
-```bash
-npx @jubalm/profiler --help
-```
-
-### Local Development
-
-```bash
-npm run profile
-```
-
-## Output Formats
-
-### Default (Markdown with Methodology)
-
-LLM-optimized format with transparent methodology footnotes:
+**Output includes methodology footnotes:**
 
 ```markdown
 ---
@@ -65,124 +37,80 @@ confidence: high
 ## Key Files
 - next.config.js
 - package.json
-- tsconfig.json
+...
 
 ## Key Directories
 - src
 - app
-- public
+...
 
 ## Key Globals
-- DATABASE_URL
-- API_KEY
+...
 
 ---
 
 **Confidence Levels:**
-- High: Framework-specific config files (next.config.js, vite.config.ts, etc.)
-- Medium: Package.json dependency/script analysis
+- High: Framework-specific config files
+- Medium: Package.json analysis
 - Low: Generic files only
 
 **Scan Strategy:**
-- Pattern-matched 19 framework config filenames
-- Pattern-matched 17 common directory names
+- Fast surface scan - no deep inspection
+- Pattern-matched against 19 framework configs
+- Pattern-matched against 17 common directories
 - Parsed .env.example for environment variables
-- Fast surface scan - no deep file content inspection
 ```
 
-### Minimal Markdown
+The footnotes help Claude understand scan limitations and provide context-aware recommendations.
 
-Same structure without methodology footnotes:
+### Pipeline Integration
 
-```markdown
----
-project_type: Next.js
-confidence: high
----
+Minimal markdown strips methodology for compact workflow integration:
 
-# Key Indicators
-
-## Key Files
-- next.config.js
-- package.json
-- tsconfig.json
-
-## Key Directories
-- src
-- app
-- public
-
-## Key Globals
-- DATABASE_URL
-- API_KEY
+```bash
+npx github:jubalm/profiler --format=markdown > .profile
 ```
 
-### JSON
+Clean data-only output for CI/CD pipelines or documentation generation.
 
-Flat structure for pipelines:
+### Programmatic Use
+
+JSON for scripts and automation:
+
+```bash
+npx github:jubalm/profiler --format=json | jq '.project_type'
+```
 
 ```json
 {
   "project_type": "Next.js",
   "confidence": "high",
-  "key_files": ["next.config.js", "package.json", "tsconfig.json"],
-  "key_directories": ["src", "app", "public"],
-  "key_globals": ["DATABASE_URL", "API_KEY"]
+  "key_files": ["next.config.js", "package.json"],
+  "key_directories": ["src", "app"],
+  "key_globals": ["DATABASE_URL"]
 }
 ```
 
-## Why?
+Parse and process project metadata in your build scripts.
 
-Gives LLMs quick context about your project with transparent detection methodology. The markdown format explains how confidence was determined and what was scanned, helping LLMs understand scan limitations and what additional analysis might be needed.
+## High-Accuracy Framework Detection
 
-## Supported Project Types
-
-### High Confidence
-- Next.js
-- Astro
-- Nuxt
-- Remix
-- SvelteKit
-- Angular
-- Gatsby
-- Cloudflare Workers
-- Rust
-- Go
-- Python
-- Ruby
-- PHP
-
-### Medium Confidence
-- Vite
-- Webpack
-
-### Low Confidence
-- Generic Node.js projects
+Instantly identifies Next.js, Astro, Nuxt, Remix, SvelteKit, Angular, Gatsby, Rust, Go, Python, Ruby, PHP, Cloudflare Workers, and more using efficient pattern recognition strategies.
 
 ## Development
 
-### Formatting & Linting
-
-This project uses [Biome](https://biomejs.dev/) for formatting and linting.
-
 ```bash
-# Fix all issues (format + lint)
+# Format + lint
 npm run check
 
-# CI check (verify only, no fixes)
+# CI check (verify only)
 npm run ci
+
+# Local test
+npm run profile
 ```
 
-## Publishing
-
-```bash
-npm publish
-```
-
-Then anyone can use:
-```bash
-npx @jubalm/profiler
-```
+Uses [Biome](https://biomejs.dev/) for formatting and linting.
 
 ## License
 

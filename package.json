@@ -8,7 +8,7 @@
     "profiler": "./dist/index.js"
   },
   "scripts": {
-    "build": "tsc",
+    "build": "npx esbuild src/index.ts --bundle --platform=node --format=esm --outfile=dist/index.js --banner:js='#!/usr/bin/env node'",
     "profile": "tsx src/index.ts",
     "check": "npx @biomejs/biome check --write .",
     "ci": "npx @biomejs/biome ci .",
